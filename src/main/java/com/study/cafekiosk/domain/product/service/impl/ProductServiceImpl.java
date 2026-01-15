@@ -32,6 +32,19 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(productEntity);
     }
 
+    @Override
+    public ProductEntity update(Long id, ProductCreateRequestDto productCreateRequestDto){
+
+        ProductEntity productEntity = productRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("상품없음"));
+
+        productEntity.update(
+           productCreateRequestDto.getProductType(),
+                productCreateRequestDto.getStock()
+        );
+        return productEntity;
+    }
+
+
     private void validateStock(ProductCreateRequestDto productCreateRequestDto){
         if(productCreateRequestDto.getProductType() != ProductType.BOTTLE && (productCreateRequestDto.getStock() == null || productCreateRequestDto.getStock() < 0)){
             throw new IllegalArgumentException("재고는 0 이상이어야 합니다.");

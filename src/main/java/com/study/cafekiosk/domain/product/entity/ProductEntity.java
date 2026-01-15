@@ -37,4 +37,9 @@ public class ProductEntity {
         this.stock = stock;
     }
 
+    public void update(ProductType type, Integer stock){
+         this.productType = type;
+         this.stock = stock;
+    }
+
 }
