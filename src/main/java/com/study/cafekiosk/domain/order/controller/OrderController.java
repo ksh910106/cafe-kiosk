@@ -1,4 +1,4 @@
-package com.study.cafekiosk.controller;
+package com.study.cafekiosk.domain.order.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

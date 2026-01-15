@@ -1,4 +1,4 @@
-package com.study.cafekiosk.domain.order;
+package com.study.cafekiosk.domain.order.domain.order;
 
 public enum OrderStatus {
     READY,   //준비

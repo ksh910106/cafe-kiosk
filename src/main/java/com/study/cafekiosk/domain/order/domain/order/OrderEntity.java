@@ -1,11 +1,9 @@
-package com.study.cafekiosk.domain.order;
+package com.study.cafekiosk.domain.order.domain.order;
 
 
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "orders")
