@@ -8,6 +8,8 @@ import com.study.cafekiosk.domain.product.service.ProductService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ProductServiceImpl implements ProductService {
@@ -42,6 +44,12 @@ public class ProductServiceImpl implements ProductService {
                 productCreateRequestDto.getStock()
         );
         return productEntity;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductEntity> findAvailableProducts() {
+        return productRepository.findByStockIsNullOrStockGreaterThan(0);
     }
 
 

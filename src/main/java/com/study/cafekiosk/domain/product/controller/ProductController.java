@@ -6,6 +6,8 @@ import com.study.cafekiosk.domain.product.entity.ProductEntity;
 import com.study.cafekiosk.domain.product.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -27,6 +29,15 @@ public class ProductController {
         ProductEntity productEntity = productService.update(id,productCreateRequestDto);
 
         return new ProductResponseDto(productEntity);
+    }
+
+    @GetMapping
+    public List<ProductResponseDto> findAvailableProducts() {
+
+        return productService.findAvailableProducts()
+                .stream()
+                .map(ProductResponseDto::new)
+                .toList();
     }
 
 }
