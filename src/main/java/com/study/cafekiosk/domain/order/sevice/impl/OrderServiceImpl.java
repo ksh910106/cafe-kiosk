@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         LocalTime now = LocalTime.now();
 
         if(now.isBefore(LocalTime.of(10,0)) || now.isAfter(LocalTime.of(22,0))) {
-            throw new IllegalAccessException("주문 가능한 시간이 아닙니다.");
+            throw new IllegalStateException("주문 가능한 시간이 아닙니다.");
         }
     }
 }
