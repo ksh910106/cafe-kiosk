@@ -33,7 +33,7 @@ public class OrderEntity {
         this.orderStatus = OrderStatus.PREPARING;
     }
 
-    public void addorderItem(OrderItemEntity orderItemEntity) {
+    public void addOrderItem(OrderItemEntity orderItemEntity) {
         this.orderItems.add(orderItemEntity);
     }
 
