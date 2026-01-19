@@ -1,5 +1,7 @@
 package com.study.cafekiosk.domain.product.service.impl;
 
+import com.study.cafekiosk.domain.order.entity.OrderStatus;
+import com.study.cafekiosk.domain.order.repository.OrderRepository;
 import com.study.cafekiosk.domain.product.dto.ProductCreateRequestDto;
 import com.study.cafekiosk.domain.product.entity.ProductEntity;
 import com.study.cafekiosk.domain.product.entity.ProductType;
@@ -15,9 +17,11 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, OrderRepository orderRepository) {
         this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -38,6 +42,12 @@ public class ProductServiceImpl implements ProductService {
     public ProductEntity update(Long id, ProductCreateRequestDto productCreateRequestDto){
 
         ProductEntity productEntity = productRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("상품없음"));
+
+        boolean preparingOrder = orderRepository.existsByOrderItems_Product_IdAndOrderStatus(id, OrderStatus.PREPARING);
+
+        if(preparingOrder){
+            throw new IllegalStateException("주문중인 상품은 수정할 수 없습니다.");
+        }
 
         productEntity.update(
            productCreateRequestDto.getProductType(),
