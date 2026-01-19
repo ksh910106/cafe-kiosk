@@ -4,6 +4,7 @@ import com.study.cafekiosk.domain.order.dto.OrderProductRequestDto;
 import com.study.cafekiosk.domain.order.dto.OrderRequestDto;
 import com.study.cafekiosk.domain.order.entity.OrderEntity;
 import com.study.cafekiosk.domain.order.entity.OrderItemEntity;
+import com.study.cafekiosk.domain.order.entity.OrderStatus;
 import com.study.cafekiosk.domain.order.repository.OrderRepository;
 import com.study.cafekiosk.domain.order.sevice.OrderService;
 import com.study.cafekiosk.domain.product.entity.ProductEntity;
@@ -52,6 +53,41 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
 
     }
+
+    @Override
+    @Transactional
+    public void completeOrder(Long orderId){
+
+        OrderEntity order = getOrder(orderId);
+
+        if(order.getOrderStatus() != OrderStatus.PREPARING){
+            throw new IllegalStateException("준비중인 주문만 완료할 수 있습니다.");
+        }
+        order.complete();
+    }
+
+    @Override
+    @Transactional
+    public void cancelOrder(Long orderId){
+
+        OrderEntity order = getOrder(orderId);
+
+        if(order.getOrderStatus() != OrderStatus.PREPARING){
+            throw new IllegalStateException("준비중인 주문만 취소할 수 있습니다.");
+        }
+
+        for(OrderItemEntity item : order.getOrderItems()) {
+            item.getProduct().increaseStock(item.getQuantity());
+        }
+
+        order.cancel();
+    }
+
+    private OrderEntity getOrder(Long orderId){
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("주문 없음"));
+    }
+
 
     private void validateOrderTime() {
 

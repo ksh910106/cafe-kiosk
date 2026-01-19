@@ -6,4 +6,9 @@ import com.study.cafekiosk.domain.order.entity.OrderEntity;
 public interface OrderService {
 
     OrderEntity createOrder(OrderRequestDto orderRequestDto);
+
+    void completeOrder(Long orderId);
+
+    void cancelOrder(Long orderId);
+
 }
