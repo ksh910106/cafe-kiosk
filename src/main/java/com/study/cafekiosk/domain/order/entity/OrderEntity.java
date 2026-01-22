@@ -37,12 +37,4 @@ public class OrderEntity {
         this.orderItems.add(orderItemEntity);
     }
 
-    public void complete() {
-        this.orderStatus = OrderStatus.COMPLETED;
-    }
-
-    public void cancel(){
-        this.orderStatus = OrderStatus.CANCELED;
-    }
-
 }

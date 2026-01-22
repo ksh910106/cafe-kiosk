@@ -53,11 +53,4 @@ public class ProductEntity {
         }
         this.stock -= quantity;
     }
-
-    public void increaseStock(Integer quantity){
-        if(this.stock == null){
-            return;
-        }
-        this.stock += quantity;
-    }
 }
