@@ -54,11 +54,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void validateOrderTime() {
-
         LocalTime now = LocalTime.now();
+        LocalTime start = LocalTime.of(10,0);
+        LocalTime end = LocalTime.of(2,0);
 
-        if(now.isBefore(LocalTime.of(10,0)) || now.isAfter(LocalTime.of(22,0))) {
-            throw new IllegalStateException("주문 가능한 시간이 아닙니다.");
+        boolean isOrderable =!(now.isBefore(start) && now.isAfter(end));
+
+        if(!isOrderable) {
+            throw   new IllegalStateException("주문가능한 시간이 아닙니다.");
         }
+
     }
 }
